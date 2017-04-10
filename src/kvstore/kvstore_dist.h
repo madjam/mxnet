@@ -217,6 +217,7 @@ class KVStoreDist : public KVStoreLocal {
 #if MKL_EXPERIMENTAL == 1
       mkl_set_tblob_eager_mode(send_buf.data());
 #endif
+      send_buf.stored.WaitToRead();
       real_t* data = static_cast<real_t*>(send_buf.data().dptr_);
       auto push_to_servers =
           [this, key, data, size](RunContext rctx, Engine::CallbackOnComplete cb) {
